@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://instrumentTwoDataEdit.caption"
+        focusComponent="form"
+        messagesPack="com.eth.instrument2.web.screens.instrumenttwodata">
+    <data>
+        <instance id="instrumentTwoDataDc"
+                  class="com.eth.instrument2.entity.InstrumentTwoData">
+            <view extends="_local">
+                <property name="proposal" view="_minimal"/>
+                <property name="colleagues" view="_minimal"/>
+            </view>
+            <loader/>
+            <collection id="colleaguesDc" property="colleagues"/>
+        </instance>
+        <collection id="proposalsDc" class="com.eth.proposals.entity.Proposal" view="_minimal">
+            <loader id="proposalsDl">
+                <query>
+                    <![CDATA[select e from proposals_Proposal e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="instrumentTwoDataDc">
+            <column width="350px">
+                <lookupPickerField id="proposalField" optionsContainer="proposalsDc" property="proposal"/>
+                <textField id="purposeField" property="purpose"/>
+            </column>
+        </form>
+        <groupBox id="colleaguesBox" caption="msg://com.eth.instrument2.entity/InstrumentTwoData.colleagues">
+            <table id="colleaguesTable" dataContainer="colleaguesDc" width="100%" height="200px">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="exclude" type="exclude"/>
+                </actions>
+                <columns>
+                    <column id="login"/>
+                    <column id="name"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="colleaguesTable.add"/>
+                    <button action="colleaguesTable.exclude"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

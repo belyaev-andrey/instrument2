@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://instrumentTwoDataBrowse.caption"
+        focusComponent="instrumentTwoDatasTable"
+        messagesPack="com.eth.instrument2.web.screens.instrumenttwodata">
+    <data readOnly="true">
+        <collection id="instrumentTwoDatasDc"
+                    class="com.eth.instrument2.entity.InstrumentTwoData">
+            <view extends="_local">
+                <property name="proposal" view="_minimal"/>
+                <property name="colleagues" view="_minimal"/>
+            </view>
+            <loader id="instrumentTwoDatasDl">
+                <query>
+                    <![CDATA[select e from instrument2_InstrumentTwoData e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="instrumentTwoDatasTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="instrumentTwoDatasTable"
+                dataLoader="instrumentTwoDatasDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="instrumentTwoDatasTable"
+                    width="100%"
+                    dataContainer="instrumentTwoDatasDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="proposal"/>
+                <column id="purpose"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="instrumentTwoDatasTable.create"/>
+                <button id="editBtn" action="instrumentTwoDatasTable.edit"/>
+                <button id="removeBtn" action="instrumentTwoDatasTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
